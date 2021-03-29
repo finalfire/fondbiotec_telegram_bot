@@ -45,7 +45,7 @@ def wff() -> str:
     # disrupt formula
     if random.random() > 0.5:
         k = int(len(formula) * 0.25)
-        ignore = [random.randint(0, len(formula)) for _ in k]
+        ignore = [random.randint(0, len(formula)) for _ in range(k)]
         formula = ''.join([x for i, x in enumerate(formula) if i not in ignore])
     
     return f'Determinare se la formula seguente è una formula ben formata (fbf): `{formula}`'
