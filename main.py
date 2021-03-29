@@ -23,6 +23,7 @@ def complemento_2() -> str:
 def gen_rappresentazione() -> str:
     fun_rappresentazioni = [
         conversione,
+        complemento_2
     ]
     return random.choice(fun_rappresentazioni)()
     
