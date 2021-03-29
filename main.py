@@ -27,7 +27,7 @@ def complemento_2() -> str:
 def wff() -> str:
     symbols = ('¬', '→', '∧', '∨', '↔︎')
     variables = ('p', 'q', 'r', 's')
-    max_depth = 5
+    max_depth = 4
 
     def generate_formula(d):
         if random.random() < 0.35 or d > max_depth:
@@ -43,7 +43,7 @@ def wff() -> str:
     formula = re.sub(single_not_pattern, '¬\1', generate_formula(0))
 
     # disrupt formula
-    if random.random() > 0.5:
+    if random.random() > 0.85:
         k = int(len(formula) * 0.25)
         ignore = [random.randint(0, len(formula)) for _ in range(k)]
         formula = ''.join([x for i, x in enumerate(formula) if i not in ignore])
