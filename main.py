@@ -5,7 +5,7 @@ import logging
 import os
 import random
 
-def gen_rappresentazione() -> str:
+def conversione() -> str:
     bases = (2, 8, 10, 16)
     bases_fun = {2: bin, 8: oct, 10: int, 16: hex}
     n = random.randint(1, 64_500)
@@ -15,13 +15,23 @@ def gen_rappresentazione() -> str:
     if b1 != 10:
         n_str = n_str[2:]
     return f'Convertire il numerale ({n_str}){b1} in base {b2}.' 
+
+def complemento_2() -> str:
+    n = random.randint(2, 1250)
+    return f'Convertire i numerali (-{n})10 e ({n})10 in base 2 secondo la rappresentazione a complemento a 2. Qual è il minor numero di bit necessario?'
+
+def gen_rappresentazione() -> str:
+    fun_rappresentazioni = [
+        conversione,
+    ]
+    return random.choice(fun_rappresentazioni)()
     
 
 _INFO = """`Hello, World!` Io sono *Heimer*, un bot dispensatore di esercizi per il corso di Fondamenti di Informatica.
 Allo stato attuale, sono capace di generare casualmente esercizi su alcune parti del corso, senza però fornirne le soluzioni 🤪.
 I comandi che attualmente comprendo sono i seguenti:
 
-- */heimer rappresentazione* (esercizio casuale sulla rappresentazione numerica dell'informazione)"""
+- */heimer rappresentazione* (esercizio casuale su conversione e rappresentazione complemento a 2)"""
 COMMAND_NOT_RECOGNIZED = 'OPS! Questo comando non corrisponde a nessuna mia feature 🤔. Prova a chiamarmi con /heimer!'
 COMMANDS = {
     'info': {
