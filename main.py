@@ -83,7 +83,7 @@ def heimer(update, context) -> None:
     
     command = context.args[0]
     if command in COMMANDS:
-        context.bot.send_message(chat_id=update.effective_chat.id, text=generate(command))
+        context.bot.send_message(chat_id=update.effective_chat.id, text=generate(command), parse_mode=ParseMode.MARKDOWN)
     else:
         context.bot.send_message(chat_id=update.effective_chat.id, text=COMMAND_NOT_RECOGNIZED)
 
