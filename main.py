@@ -70,7 +70,9 @@ COMMAND_NOT_RECOGNIZED = 'OPS! Questo comando non corrisponde a nessuna mia feat
 COMMANDS = {
     'info': {
         'text': _INFO
-    }
+    },
+    'rappresentazione': {},
+    'logica': {}
 }
 
 
