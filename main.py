@@ -24,37 +24,43 @@ def complemento_2() -> str:
     return f'Convertire i numerali (-{n})10 e ({n})10 in base 2 secondo la rappresentazione a complemento a 2. Qual è il minor numero di bit necessario?'
 
 
-def wff() -> str:
+class Logica:
     symbols = ('¬', '→', '∧', '∨', '↔︎')
     variables = ('p', 'q', 'r', 's')
     max_depth = 4
-
-    def generate_formula(d):
-        if random.random() < 0.35 or d > max_depth:
-            return random.choice(variables)
-
-        symbol = random.choice(symbols)
-        
-        if symbol == symbols[0]:
-            return f'{symbol}({generate_formula(d+1)})'
-        return f'({generate_formula(d+1)} {symbol} {generate_formula(d+1)})'
-    
     single_not_pattern = re.compile(r'¬\(([qrs])\)')
-    formula = re.sub(single_not_pattern, '¬\1', generate_formula(0))
 
-    # disrupt formula
-    if random.random() > 0.85:
-        k = int(len(formula) * 0.25)
-        ignore = [random.randint(0, len(formula)) for _ in range(k)]
-        formula = ''.join([x for i, x in enumerate(formula) if i not in ignore])
+    @classmethod
+    def generate_formula(cls, d, m=None):
+        if random.random() < 0.35 or d > (cls.max_depth if m == None else m):
+            return random.choice(cls.variables)
+        symbol = random.choice(cls.symbols)
+        if symbol == cls.symbols[0]:
+            return f'{symbol}({cls.generate_formula(d+1)})'
+        return f'({cls.generate_formula(d+1)} {symbol} {cls.generate_formula(d+1)})'
     
-    return f'Determinare se la formula seguente è una formula ben formata (fbf): `{formula}`'
+    @staticmethod
+    def wff() -> str:
+        formula = re.sub(Logica.single_not_pattern, '¬\1', Logica.generate_formula(0))
+
+        # disrupt formula
+        if random.random() > 0.85:
+            k = int(len(formula) * 0.25)
+            ignore = [random.randint(0, len(formula)) for _ in range(k)]
+            formula = ''.join([x for i, x in enumerate(formula) if i not in ignore])
+        
+        return f'Determinare se la formula seguente è una formula ben formata (fbf): `{formula}`'
+
+    @staticmethod
+    def taut_or_sat() -> str:
+        formula = re.sub(Logica.single_not_pattern, '¬\1', Logica.generate_formula(0, m=3))
+        return f'Determinare se la formula seguente è {"una tatologia" if random.random() > 0.5 else "soddisfacibile"}: `{formula}`'
 
 
 def generate(mode) -> str:
     modes = {
         'rappresentazione': [conversione, complemento_2],
-        'logica': [wff]
+        'logica': [Logica.wff, Logica.taut_or_sat]
     }
     
     return random.choice(modes[mode])()
