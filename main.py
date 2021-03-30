@@ -28,7 +28,7 @@ class Logica:
     symbols = ('¬', '→', '∧', '∨', '↔︎')
     variables = ('p', 'q', 'r', 's')
     max_depth = 4
-    single_not_pattern = re.compile(r'¬\(([qrs])\)')
+    single_not_pattern = re.compile(r'¬\(([pqrs])\)')
 
     @classmethod
     def generate_formula(cls, d, m=None):
@@ -41,7 +41,7 @@ class Logica:
     
     @staticmethod
     def wff() -> str:
-        formula = re.sub(Logica.single_not_pattern, '¬\1', Logica.generate_formula(0))
+        formula = re.sub(Logica.single_not_pattern, r'¬\1', Logica.generate_formula(0))
 
         # disrupt formula
         if random.random() > 0.85:
@@ -53,7 +53,7 @@ class Logica:
 
     @staticmethod
     def taut_or_sat() -> str:
-        formula = re.sub(Logica.single_not_pattern, '¬\1', Logica.generate_formula(0, m=3))
+        formula = re.sub(Logica.single_not_pattern, r'¬\1', Logica.generate_formula(0, m=3))
         return f'Determinare se la formula seguente è {"una tatologia" if random.random() > 0.5 else "soddisfacibile"}: `{formula}`'
 
 
